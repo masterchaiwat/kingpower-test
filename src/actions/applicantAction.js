@@ -38,6 +38,14 @@ export const deleteSelection = () => {
     }
 }
 
+export const deleteApplicant = data => {
+    return dispatch => {
+        dispatch({
+            type: 'grid/deleteApplicant',
+            payload: data
+        });
+    }
+}
 
 export const initFormValue = () => {
     return dispatch => {
@@ -70,31 +78,10 @@ export const saveApplicant = data => {
             payload: data
         });
         
-        /*const req_list = useSelector((state)=>state.req_list);
-        const exists = false;
-        req_list.map((rec)=>{
-            if(rec.id === data.id){
-                exists = true;
-            }
-        })
-
-        if(exists){
-            dispatch(addNewApplicant(data));
-        }
-        else{
-            dispatch(updateApplicant(data));
-        }*/
     }
 }
 
-export const deleteApplicant = data => {
-    return dispatch => {
-        dispatch({
-            type: 'reg/deleteApplicant',
-            payload: data
-        });
-    }
-}
+
 
 export const loadDataForEdit = data => {
     return dispatch => {

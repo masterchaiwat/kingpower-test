@@ -113,12 +113,26 @@ export default function ApplicantReducer(state = initialState, action) {
           }
         }
         case 'grid/deleteSelection': {
+          const new_req_list = state.req_list.filter(rec=> state.selectionIds.indexOf(rec.id) === -1);
+          localStorage.setItem('applicant', JSON.stringify(new_req_list));
           return {
             ...state,
             form : initFormValue,
-            req_list: state.req_list.filter(rec=> state.selectionIds.indexOf(rec.id) === -1)
+            selectionIds : [],
+            req_list: new_req_list
           }
         }
+        case 'grid/deleteApplicant': {
+          const new_req_list = state.req_list.filter((rec) => rec.id !== action.payload.id);
+          localStorage.setItem('applicant', JSON.stringify(new_req_list));
+          return {
+            ...state,
+            form : initFormValue,
+            selectionIds : [],
+            req_list: new_req_list
+          }
+        }
+
         case 'form/setFormValue': {
           return {
             ...state,
@@ -136,13 +150,7 @@ export default function ApplicantReducer(state = initialState, action) {
           }
         }
 
-        case 'reg/deleteApplicant': {
-          return {
-            ...state,
-            form : initFormValue,
-            req_list: state.req_list.filter((rec) => rec.id !== action.payload.id),
-          }
-        }
+        
         case 'reg/editApplicant': {
           return {
             ...state,
@@ -156,15 +164,6 @@ export default function ApplicantReducer(state = initialState, action) {
             },
             isEdit: true,
           }
-        }
-        case 'reg/addNewApplicant': {
-            return {
-              ...state,
-              req_list: [
-                ...state.req_list,
-                action.payload
-              ]
-            }
         }
         case 'reg/addOrUpdateApplicant': {
           let exists = false;
